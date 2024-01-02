@@ -1,0 +1,3 @@
+[submodule "secrets/Maple-Trend-Secret"]
+	path = secrets/Maple-Trend-Secret
+	url = https://github.com/Hyyena/Maple-Trend-Secret.git
