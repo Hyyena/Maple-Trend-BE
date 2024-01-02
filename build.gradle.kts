@@ -61,6 +61,8 @@ project("nexon-open-api-core") {
 
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.retry:spring-retry")
+
+        implementation("com.googlecode.json-simple:json-simple:1.1.1")
     }
 
     val jar: Jar by tasks
@@ -70,14 +72,30 @@ project("nexon-open-api-core") {
     jar.enabled = true
 }
 
+project("app-maple-stamp-api") {
+    dependencies {
+        implementation(project(":common"))
+        implementation(project(":nexon-open-api-core"))
+
+        implementation("org.springframework.boot:spring-boot-starter-log4j2")
+
+        implementation("org.springframework.boot:spring-boot-starter-web")
+        implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+
+        testImplementation("org.springframework.boot:spring-boot-starter-test")
+    }
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+}
+
 tasks.named<BootJar>("bootJar") {
     enabled = false
 }
 
 tasks.named<Jar>("jar") {
     enabled = true
-}
-
-tasks.withType<Test> {
-    useJUnitPlatform()
 }
