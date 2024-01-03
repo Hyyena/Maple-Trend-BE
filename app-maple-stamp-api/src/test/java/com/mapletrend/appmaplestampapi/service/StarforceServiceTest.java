@@ -23,7 +23,8 @@ class StarforceServiceTest {
     @DisplayName("스타포스 정보 조회")
     @Test
     void shouldReturnStarforceResponse() {
-        StarforceResponse actualStarforceResponse = starforceService.getStarforce(count, date);
+        StarforceResponse actualStarforceResponse = starforceService.getStarforce(nexonApiConfig.getNexonApiKey(),
+                count, date);
         System.out.println(actualStarforceResponse);
     }
 }

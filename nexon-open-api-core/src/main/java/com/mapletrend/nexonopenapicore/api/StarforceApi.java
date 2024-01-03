@@ -35,11 +35,11 @@ public class StarforceApi {
     private final RestTemplate restTemplate;
     private final NexonApiConfig nexonApiConfig;
 
-    public StarforceResponse fetchStarforceHistory(String count, String date) {
+    public StarforceResponse fetchStarforceHistory(String nexonApiKey, String count, String date) {
         log.info("<스타포스 정보 조회 시작> 조회 개수: {}, 조회 날짜: {}", count, date);
         StarforceRequest starforceRequest = createStarforceRequest(count, date);
         URI requestUri = buildRequestUrl(starforceRequest);
-        HttpEntity<String> entity = createHttpEntity();
+        HttpEntity<String> entity = createHttpEntity(nexonApiKey);
 
         ResponseEntity<String> response = executeApiRequest(requestUri, entity);
         log.info("<스타포스 정보 조회 종료> 조회 개수: {}, 조회 날짜: {}", count, date);
@@ -63,10 +63,10 @@ public class StarforceApi {
                 .build(true);
     }
 
-    private HttpEntity<String> createHttpEntity() {
+    private HttpEntity<String> createHttpEntity(String nexonApiKey) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.set("x-nxopen-api-key", nexonApiConfig.getNexonApiKey());
+        headers.set("x-nxopen-api-key", nexonApiKey);
 
         return new HttpEntity<>(headers);
     }
