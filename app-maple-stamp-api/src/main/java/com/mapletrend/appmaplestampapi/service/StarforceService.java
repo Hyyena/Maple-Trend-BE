@@ -11,7 +11,7 @@ public class StarforceService {
 
     private final StarforceApi starforceApi;
 
-    public StarforceResponse getStarforce(String count, String date) {
-        return starforceApi.fetchStarforceHistory(count, date);
+    public StarforceResponse getStarforce(String nexonApiKey, String count, String date) {
+        return starforceApi.fetchStarforceHistory(nexonApiKey, count, date);
     }
 }
