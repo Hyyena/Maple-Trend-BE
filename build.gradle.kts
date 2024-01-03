@@ -78,6 +78,7 @@ project("app-maple-stamp-api") {
         implementation(project(":nexon-open-api-core"))
 
         implementation("org.springframework.boot:spring-boot-starter-log4j2")
+        implementation("com.googlecode.json-simple:json-simple:1.1.1")
 
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.boot:spring-boot-starter-actuator")
