@@ -85,6 +85,8 @@ project("app-maple-stamp-api") {
         implementation("org.springframework.boot:spring-boot-starter-web")
         implementation("org.springframework.boot:spring-boot-starter-actuator")
 
+        implementation("io.micrometer:micrometer-registry-prometheus")
+
         developmentOnly("org.springframework.boot:spring-boot-devtools")
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
