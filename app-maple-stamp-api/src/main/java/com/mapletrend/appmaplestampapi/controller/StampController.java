@@ -16,6 +16,7 @@ import com.mapletrend.nexonopenapicore.dto.response.StarforceResponse;
 import com.mapletrend.nexonopenapicore.dto.response.StatResponse;
 import com.mapletrend.nexonopenapicore.dto.response.UnionRankingDetailResponse;
 import com.mapletrend.nexonopenapicore.dto.response.UnionRankingResponse;
+import io.micrometer.core.annotation.Timed;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -46,6 +47,7 @@ public class StampController {
 
     private final StampRepository stampRepository;
 
+    @Timed(value = "createStamp")
     @PostMapping("/stamp")
     public ApiResponse<Object> createStamp(
             @RequestParam("inven_nickname") String invenNickname,
@@ -144,6 +146,11 @@ public class StampController {
                             .data(stampImage)
                             .build();
                 }
+            } else {
+                return ApiResponse.<Object>builder()
+                        .statusCode(HttpStatus.BAD_REQUEST.value())
+                        .message("인장 발급 실패")
+                        .build();
             }
         }
 
