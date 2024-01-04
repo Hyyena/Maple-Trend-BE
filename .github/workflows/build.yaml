@@ -47,7 +47,8 @@ jobs:
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           ghtoken: ${{ secrets.GHP_TOKEN }}
-          repo: ${{ user/repo }}
+          repo: ${{ github.repository }}
+          submodules: true
 
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
