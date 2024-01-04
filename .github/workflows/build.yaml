@@ -11,7 +11,7 @@ name: Gradle Build and Deploy
 
 on:
   push:
-    branches-ignore: [ develop ]
+    branches-ignore: [ master, main ]
 
 jobs:
   build:
@@ -41,31 +41,3 @@ jobs:
         with:
           name: build-reports
           path: build/reports/
-
-      - name: Connect deploy key
-        uses: cloudtype-github-actions/connect@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          ghtoken: ${{ secrets.GHP_TOKEN }}
-          repo: ${{ github.repository }}
-          submodules: true
-
-      - name: Deploy
-        uses: cloudtype-github-actions/deploy@v1
-        with:
-          token: ${{ secrets.CLOUDTYPE_TOKEN }}
-          project: hyyena/maple-trend
-          stage: main
-          yaml: |
-            name: maple-trend-be
-            app: java@19
-            options:
-              ports: "9000"
-              healthz: /actuator/health
-              strategy: rolling
-              include: app-maple-stamp-api
-            context:
-              git:
-                url: git@github.com:${{ github.repository }}.git
-                ref: ${{ github.ref }}
-              
