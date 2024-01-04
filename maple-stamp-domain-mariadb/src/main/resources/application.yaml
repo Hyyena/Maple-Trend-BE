@@ -1,0 +1,5 @@
+spring:
+  config:
+    import:
+      - classpath:secrets/Maple-Trend-Secret/common/application.yaml
+      - classpath:secrets/Maple-Trend-Secret/maple-stamp-domain-mariadb/application.yaml
