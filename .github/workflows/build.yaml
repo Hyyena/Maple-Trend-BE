@@ -47,6 +47,7 @@ jobs:
         with:
           token: ${{ secrets.CLOUDTYPE_TOKEN }}
           ghtoken: ${{ secrets.GHP_TOKEN }}
+          repo: ${{ user/repo }}
 
       - name: Deploy
         uses: cloudtype-github-actions/deploy@v1
@@ -61,8 +62,9 @@ jobs:
               ports: "9000"
               healthz: /actuator/health
               strategy: rolling
-              build: app-maple-stamp-api
+              build: app-maple-stamp-api-0.0.1-SNAPSHOT.jar
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
                 ref: ${{ github.ref }}
+              
