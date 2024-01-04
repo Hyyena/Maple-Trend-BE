@@ -2,6 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     java
+    `java-library`
     id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
 }
@@ -76,6 +77,7 @@ project("app-maple-stamp-api") {
     dependencies {
         implementation(project(":common"))
         implementation(project(":nexon-open-api-core"))
+        implementation(project(":maple-stamp-domain-mariadb"))
 
         implementation("org.springframework.boot:spring-boot-starter-log4j2")
         implementation("com.googlecode.json-simple:json-simple:1.1.1")
@@ -87,6 +89,38 @@ project("app-maple-stamp-api") {
 
         testImplementation("org.springframework.boot:spring-boot-starter-test")
     }
+
+    val jar: Jar by tasks
+    val bootJar: BootJar by tasks
+
+    bootJar.enabled = true
+    jar.enabled = false
+
+    tasks.withType<Test> {
+        useJUnitPlatform()
+    }
+}
+
+project("maple-stamp-domain-mariadb") {
+    apply {
+        plugin("java-library")
+    }
+
+    dependencies {
+        implementation(project(":common"))
+
+        api("org.springframework.boot:spring-boot-starter-data-jpa")
+
+        implementation("org.springframework.boot:spring-boot-starter-validation")
+        implementation("org.springframework.boot:spring-boot-starter-jdbc")
+        runtimeOnly("org.mariadb.jdbc:mariadb-java-client")
+    }
+
+    val jar: Jar by tasks
+    val bootJar: BootJar by tasks
+
+    bootJar.enabled = false
+    jar.enabled = true
 
     tasks.withType<Test> {
         useJUnitPlatform()
