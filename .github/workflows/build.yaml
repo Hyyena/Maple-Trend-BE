@@ -61,6 +61,7 @@ jobs:
               ports: "9000"
               healthz: /actuator/health
               strategy: rolling
+              build: app-maple-stamp-api
             context:
               git:
                 url: git@github.com:${{ github.repository }}.git
