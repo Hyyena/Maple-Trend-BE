@@ -1,5 +1,7 @@
 package com.mapletrend.appmaplestampapi.service;
 
+import com.mapletrend.maplestampdomainmariadb.entity.Stamp;
+import com.mapletrend.maplestampdomainmariadb.repository.StampRepository;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Font;
@@ -20,13 +22,23 @@ import org.springframework.stereotype.Service;
 @Log4j2
 public class StampService {
 
+    private final StampRepository stampRepository;
+
     public byte[] createStampImage(JSONObject jsonObject) {
         String invenNickname = (String) jsonObject.get("invenNickname");
-        String characterLevel = (String) jsonObject.get("characterLevel");
-        String battlePower = (String) jsonObject.get("battlePower");
-        String unionLevel = (String) jsonObject.get("unionLevel");
+        String formattedCharacterLevel = (String) jsonObject.get("formattedCharacterLevel");
+        String formattedBattlePower = (String) jsonObject.get("formattedBattlePower");
+        String formattedUnionLevel = (String) jsonObject.get("formattedUnionLevel");
         String uuid = (String) jsonObject.get("uuid");
         String date = (String) jsonObject.get("date");
+
+        String characterName = (String) jsonObject.get("characterName");
+        String worldName = (String) jsonObject.get("worldName");
+        String ocid = (String) jsonObject.get("ocid");
+        String nexonApiKey = (String) jsonObject.get("nexonApiKey");
+        long characterLevel = (long) jsonObject.get("characterLevel");
+        long unionLevel = (long) jsonObject.get("unionLevel");
+        String battlePower = (String) jsonObject.get("battlePower");
 
         int width = 600;
         int height = 200;
@@ -43,9 +55,9 @@ public class StampService {
         graphics2D.drawString(invenNickname, 30, 60);
 
         graphics2D.setFont(new Font("Arial", Font.PLAIN, 20));
-        graphics2D.drawString("레벨: " + characterLevel, 30, 100);
-        graphics2D.drawString("전투력: " + battlePower, 30, 130);
-        graphics2D.drawString("유니온: " + unionLevel, 30, 160);
+        graphics2D.drawString("레벨: " + formattedCharacterLevel, 30, 100);
+        graphics2D.drawString("전투력: " + formattedBattlePower, 30, 130);
+        graphics2D.drawString("유니온: " + formattedUnionLevel, 30, 160);
 
         Font detailsFont = new Font("Arial", Font.PLAIN, 12);
         graphics2D.setFont(detailsFont);
@@ -98,6 +110,22 @@ public class StampService {
         try {
             ImageIO.write(bufferedImage, "jpg", baos);
             byte[] bytes = baos.toByteArray();
+
+            Stamp stamp = Stamp.builder()
+                    .uuid(uuid)
+                    .nexonApiKey(nexonApiKey)
+                    .ocid(ocid)
+                    .invenNickname(invenNickname)
+                    .characterName(characterName)
+                    .worldName(worldName)
+                    .characterLevel(characterLevel)
+                    .battlePower(battlePower)
+                    .unionLevel(unionLevel)
+                    .stampImage(bytes)
+                    .build();
+
+            stampRepository.save(stamp);
+
             return bytes;
         } catch (IOException e) {
             log.error("이미지 파일 생성 중 오류가 발생했습니다.", e);
