@@ -8,6 +8,7 @@ import com.mapletrend.appmaplestampapi.service.StatService;
 import com.mapletrend.appmaplestampapi.service.UnionRankingService;
 import com.mapletrend.appmaplestampapi.service.dto.request.StampRequest;
 import com.mapletrend.appmaplestampapi.service.dto.response.ApiResponse;
+import com.mapletrend.maplestampdomainmariadb.repository.StampRepository;
 import com.mapletrend.nexonopenapicore.dto.response.BasicResponse;
 import com.mapletrend.nexonopenapicore.dto.response.FinalStatResponse;
 import com.mapletrend.nexonopenapicore.dto.response.StarforceHistoryResponse;
@@ -42,6 +43,8 @@ public class StampController {
     private final UnionRankingService unionRankingService;
     private final BasicService basicService;
     private final StatService statService;
+
+    private final StampRepository stampRepository;
 
     @PostMapping("/stamp")
     public ApiResponse<Object> createStamp(
@@ -118,11 +121,19 @@ public class StampController {
 
                     JSONObject jsonObject = new JSONObject();
                     jsonObject.put("invenNickname", invenNickname);
-                    jsonObject.put("characterLevel", formattedCharacterLevel);
-                    jsonObject.put("battlePower", formattedBattlePower);
-                    jsonObject.put("unionLevel", formattedUnionLevel);
+                    jsonObject.put("formattedCharacterLevel", formattedCharacterLevel);
+                    jsonObject.put("formattedBattlePower", formattedBattlePower);
+                    jsonObject.put("formattedUnionLevel", formattedUnionLevel);
                     jsonObject.put("uuid", uuid);
                     jsonObject.put("date", formattedToday);
+
+                    jsonObject.put("characterName", characterName);
+                    jsonObject.put("characterLevel", characterLevel);
+                    jsonObject.put("battlePower", battlePower);
+                    jsonObject.put("unionLevel", unionLevel);
+                    jsonObject.put("worldName", worldName);
+                    jsonObject.put("ocid", ocid);
+                    jsonObject.put("nexonApiKey", stampRequest.getNexonApiKey());
 
                     byte[] stampImage = stampService.createStampImage(jsonObject);
                     log.info(stampImage);
