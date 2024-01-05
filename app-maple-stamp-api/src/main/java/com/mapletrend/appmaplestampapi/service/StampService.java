@@ -49,16 +49,16 @@ public class StampService {
         graphics2D.fillRect(0, 0, 600, 200);
 
         int fontSize = 30;
-        graphics2D.setFont(new Font(null, Font.BOLD, fontSize));
+        graphics2D.setFont(new Font("Liberation Sans", Font.BOLD, fontSize));
         graphics2D.setColor(Color.black);
         graphics2D.drawString(invenNickname, 30, 60);
 
-        graphics2D.setFont(new Font(null, Font.PLAIN, 20));
+        graphics2D.setFont(new Font("Liberation Sans", Font.PLAIN, 20));
         graphics2D.drawString("레벨: " + formattedCharacterLevel, 30, 100);
         graphics2D.drawString("전투력: " + formattedBattlePower, 30, 130);
         graphics2D.drawString("유니온: " + formattedUnionLevel, 30, 160);
 
-        Font detailsFont = new Font(null, Font.PLAIN, 12);
+        Font detailsFont = new Font("Liberation Sans", Font.PLAIN, 12);
         graphics2D.setFont(detailsFont);
         // Calculate position for the text
         FontMetrics metrics = graphics2D.getFontMetrics(detailsFont);
@@ -81,7 +81,7 @@ public class StampService {
         String watermarkText = invenNickname;
 
         // Set watermark properties
-        graphics2D.setFont(new Font(null, Font.PLAIN, watermarkFontSize));
+        graphics2D.setFont(new Font("Liberation Sans", Font.PLAIN, watermarkFontSize));
         graphics2D.setColor(new Color(0, 0, 0, 128));
         graphics2D.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
 
