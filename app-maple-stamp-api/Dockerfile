@@ -9,6 +9,8 @@ ARG JAR_FILE=build/libs/app-maple-stamp-api-0.0.1-SNAPSHOT.jar
 ARG CONTAINER_JAR_FILE=app-maple-stamp-api.jar
 COPY ${JAR_FILE} ${CONTAINER_JAR_FILE}
 
+RUN apt-get update && apt-get -y upgrade && apt-get install -y fonts-nanum* && fc-cache -fv
+
 EXPOSE 9000
 
 # Spring Boot를 실행하기 위한 entry point 지정
