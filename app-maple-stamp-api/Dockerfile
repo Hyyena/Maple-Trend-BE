@@ -12,4 +12,3 @@ ENTRYPOINT ["java", "-Dspring.profiles.active=prod", "-jar", "/app-maple-stamp-a
 
 # 시간 설정
 ENV TZ=Asia/Seoul
-RUN apk add --no-cache tzdata
