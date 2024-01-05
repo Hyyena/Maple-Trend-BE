@@ -36,7 +36,7 @@ public class Stamp extends BaseEntity {
     @Column(unique = true, length = 45)
     private String characterName;
 
-    @Column(unique = true, length = 45)
+    @Column(length = 45)
     private String worldName;
 
     private long characterLevel;
@@ -57,6 +57,16 @@ public class Stamp extends BaseEntity {
         this.ocid = ocid;
         this.invenNickname = invenNickname;
         this.characterName = characterName;
+        this.worldName = worldName;
+        this.characterLevel = characterLevel;
+        this.battlePower = battlePower;
+        this.unionLevel = unionLevel;
+        this.stampImage = stampImage;
+    }
+
+    public void updateStamp(String ocid, String worldName, long characterLevel, String battlePower, long unionLevel,
+                            byte[] stampImage) {
+        this.ocid = ocid;
         this.worldName = worldName;
         this.characterLevel = characterLevel;
         this.battlePower = battlePower;
