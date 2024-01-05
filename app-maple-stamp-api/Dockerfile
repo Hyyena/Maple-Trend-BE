@@ -1,12 +1,10 @@
 FROM eclipse-temurin:19
+ENV LC_ALL=C.UTF-8
 
 # 컨테이너 내부의 /app 디렉토리에 jar 파일 복사
 ARG JAR_FILE=build/libs/app-maple-stamp-api-0.0.1-SNAPSHOT.jar
 ARG CONTAINER_JAR_FILE=app-maple-stamp-api.jar
 COPY ${JAR_FILE} ${CONTAINER_JAR_FILE}
-
-# Install Fonts
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y --no-install-recommends fontconfig fonts-liberation
 
 EXPOSE 9000
 
