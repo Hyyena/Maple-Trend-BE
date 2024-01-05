@@ -5,10 +5,16 @@ RUN apt-get update && apt-get install -y locales
 RUN locale-gen ko_KR.UTF-8
 ENV LC_ALL ko_KR.UTF-8
 
+RUN apt-get update && apt-get install -y locales
+RUN locale-gen ko_KR.UTF-8
+ENV LC_ALL ko_KR.UTF-8
+
 # 컨테이너 내부의 /app 디렉토리에 jar 파일 복사
 ARG JAR_FILE=build/libs/app-maple-stamp-api-0.0.1-SNAPSHOT.jar
 ARG CONTAINER_JAR_FILE=app-maple-stamp-api.jar
 COPY ${JAR_FILE} ${CONTAINER_JAR_FILE}
+
+RUN apt-get update && apt-get -y upgrade && apt-get install -y fonts-nanum* && fc-cache -fv
 
 EXPOSE 9000
 
