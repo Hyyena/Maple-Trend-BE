@@ -55,7 +55,7 @@ public class StampController {
             @RequestBody StampRequest stampRequest
     ) {
         LocalDate today = LocalDate.now();
-        LocalDate yesterday = today.minusDays(1);
+        LocalDate yesterday = today.minusDays(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
         String formattedToday = today.format(formatter);
         String formattedYesterday = yesterday.format(formatter);
