@@ -1,4 +1,9 @@
 FROM eclipse-temurin:19
+ENV LC_ALL=C.UTF-8
+
+RUN apt-get update && apt-get install -y locales
+RUN locale-gen ko_KR.UTF-8
+ENV LC_ALL ko_KR.UTF-8
 
 RUN apt-get update && apt-get install -y locales
 RUN locale-gen ko_KR.UTF-8
