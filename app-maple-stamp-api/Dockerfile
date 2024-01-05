@@ -6,7 +6,7 @@ ARG CONTAINER_JAR_FILE=app-maple-stamp-api.jar
 COPY ${JAR_FILE} ${CONTAINER_JAR_FILE}
 
 # Install Fonts
-RUN apt-get DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     fontconfig \
     fonts-liberation
 
