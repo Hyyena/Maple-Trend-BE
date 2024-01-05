@@ -9,7 +9,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import lombok.RequiredArgsConstructor;
@@ -99,12 +98,12 @@ public class StampService {
 
         graphics2D.dispose();
 
-        try {
-            File file = new File("stamp.jpg");
-            ImageIO.write(bufferedImage, "jpg", file);
-        } catch (IOException e) {
-            log.error("이미지 파일 생성 중 오류가 발생했습니다.", e);
-        }
+//        try {
+//            File file = new File("stamp.jpg");
+//            ImageIO.write(bufferedImage, "jpg", file);
+//        } catch (IOException e) {
+//            log.error("이미지 파일 생성 중 오류가 발생했습니다.", e);
+//        }
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
