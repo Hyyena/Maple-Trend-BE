@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -24,6 +25,7 @@ public class StampService {
     private final StampRepository stampRepository;
 
     public byte[] createStampImage(JSONObject jsonObject) {
+
         String invenNickname = (String) jsonObject.get("invenNickname");
         String formattedCharacterLevel = (String) jsonObject.get("formattedCharacterLevel");
         String formattedBattlePower = (String) jsonObject.get("formattedBattlePower");
@@ -38,6 +40,13 @@ public class StampService {
         long characterLevel = (long) jsonObject.get("characterLevel");
         long unionLevel = (long) jsonObject.get("unionLevel");
         String battlePower = (String) jsonObject.get("battlePower");
+
+        Optional<Stamp> isExistingStamp = stampRepository.findByNexonApiKeyAndInvenNicknameAndCharacterName(
+                nexonApiKey, invenNickname, characterName);
+
+        if (isExistingStamp.isPresent()) {
+            uuid = isExistingStamp.get().getUuid();
+        }
 
         int width = 600;
         int height = 200;
@@ -122,6 +131,13 @@ public class StampService {
                     .unionLevel(unionLevel)
                     .stampImage(bytes)
                     .build();
+
+            if (isExistingStamp.isPresent()) {
+                Stamp existingStamp = isExistingStamp.get();
+                existingStamp.updateStamp(ocid, worldName, characterLevel, battlePower, unionLevel, bytes);
+                log.info("이미 존재하는 스탬프입니다.");
+                return bytes;
+            }
 
             stampRepository.save(stamp);
 
