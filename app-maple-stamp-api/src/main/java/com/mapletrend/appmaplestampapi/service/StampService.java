@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class StampService {
 
     private final StampRepository stampRepository;
 
+    @Transactional
     public byte[] createStampImage(JSONObject jsonObject) {
 
         String invenNickname = (String) jsonObject.get("invenNickname");
@@ -144,6 +146,15 @@ public class StampService {
             return bytes;
         } catch (IOException e) {
             log.error("이미지 파일 생성 중 오류가 발생했습니다.", e);
+        }
+        return new byte[0];
+    }
+
+    @Transactional(readOnly = true)
+    public byte[] getStampImage(String invenNickname) {
+        Optional<Stamp> stamp = stampRepository.findByInvenNickname(invenNickname);
+        if (stamp.isPresent()) {
+            return stamp.get().getStampImage();
         }
         return new byte[0];
     }

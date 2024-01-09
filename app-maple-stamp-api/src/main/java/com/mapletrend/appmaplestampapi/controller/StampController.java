@@ -8,6 +8,7 @@ import com.mapletrend.appmaplestampapi.service.StatService;
 import com.mapletrend.appmaplestampapi.service.UnionRankingService;
 import com.mapletrend.appmaplestampapi.service.dto.request.StampRequest;
 import com.mapletrend.appmaplestampapi.service.dto.response.ApiResponse;
+import com.mapletrend.appmaplestampapi.service.dto.response.StampImageResponse;
 import com.mapletrend.maplestampdomainmariadb.repository.StampRepository;
 import com.mapletrend.nexonopenapicore.dto.response.BasicResponse;
 import com.mapletrend.nexonopenapicore.dto.response.FinalStatResponse;
@@ -26,6 +27,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -192,5 +195,26 @@ public class StampController {
 
     private String formatUnionLevel(long unionLevel) {
         return (unionLevel / 500 * 500) + "+";
+    }
+
+    @GetMapping("/stamp/{invenNickname}")
+    @Timed(value = "findStampByInvenNickname")
+    public ApiResponse<StampImageResponse> findStampByInvenNickname(
+            @PathVariable("invenNickname") String invenNickname
+    ) {
+        byte[] stampImage = stampService.getStampImage(invenNickname);
+        if (stampImage.length == 0) {
+            return ApiResponse.<StampImageResponse>fail(
+                    HttpStatus.NOT_FOUND.value(),
+                    "스탬프 조회 실패"
+            );
+        }
+
+        return ApiResponse.<StampImageResponse>success(
+                "스탬프 조회 성공",
+                StampImageResponse.builder()
+                        .stampImage(stampImage)
+                        .build()
+        );
     }
 }
