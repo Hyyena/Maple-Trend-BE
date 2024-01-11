@@ -19,6 +19,8 @@ import com.mapletrend.nexonopenapicore.dto.response.UnionRankingDetailResponse;
 import com.mapletrend.nexonopenapicore.dto.response.UnionRankingResponse;
 import io.micrometer.core.annotation.Timed;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Locale;
@@ -61,6 +63,7 @@ public class StampController {
         LocalDate yesterday = today.minusDays(2);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
         String formattedToday = today.format(formatter);
+        String apiUpdateToday = getApiUpdateToday();
         String formattedYesterday = yesterday.format(formatter);
 
         StarforceResponse starforceResponse = starforceService.getStarforce(stampRequest.getNexonApiKey(), "10",
@@ -195,6 +198,20 @@ public class StampController {
 
     private String formatUnionLevel(long unionLevel) {
         return (unionLevel / 500 * 500) + "+";
+    }
+
+    private String getApiUpdateToday() {
+        LocalDate today = LocalDate.now();
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime apiUpdateTime = LocalDateTime.of(today, LocalTime.of(1, 5));
+        LocalDate queryDate;
+        if (now.isBefore(apiUpdateTime)) {
+            queryDate = today.minusDays(2);
+        } else {
+            queryDate = today.minusDays(1);
+        }
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd", Locale.KOREA);
+        return queryDate.format(formatter);
     }
 
     @GetMapping("/stamp/{invenNickname}")
