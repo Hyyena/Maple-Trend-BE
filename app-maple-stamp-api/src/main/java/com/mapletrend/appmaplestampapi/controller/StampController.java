@@ -104,12 +104,12 @@ public class StampController {
                             .build();
                 }
 
-                BasicResponse basicResponse = basicService.getBasic(ocid, formattedYesterday);
+                BasicResponse basicResponse = basicService.getBasic(ocid, apiUpdateToday);
                 log.info("basicResponse: {}", basicResponse);
                 long characterLevel = basicResponse.getCharacterLevel();
                 log.info("characterLevel: {}", characterLevel);
 
-                StatResponse statResponse = statService.getStat(ocid, formattedYesterday);
+                StatResponse statResponse = statService.getStat(ocid, apiUpdateToday);
                 log.info("statResponse: {}", statResponse);
                 List<FinalStatResponse> finalStatResponse = statResponse.getFinalStat();
                 if (finalStatResponse != null && !finalStatResponse.isEmpty()) {
