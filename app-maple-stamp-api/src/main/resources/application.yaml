@@ -3,7 +3,7 @@ spring:
     active: local
   config:
     import:
-      - classpath:secrets/Maple-Trend-Secret/common/application.yaml
-      - classpath:secrets/Maple-Trend-Secret/nexon-open-api-core/application.yaml
-      - classpath:secrets/Maple-Trend-Secret/app-maple-stamp-api/application.yaml
-      - classpath:secrets/Maple-Trend-Secret/maple-stamp-domain-mariadb/application.yaml
+      - classpath:copied-secrets/Maple-Trend-Secret/common/application.yaml
+      - classpath:copied-secrets/Maple-Trend-Secret/nexon-open-api-core/application.yaml
+      - classpath:copied-secrets/Maple-Trend-Secret/app-maple-stamp-api/application.yaml
+      - classpath:copied-secrets/Maple-Trend-Secret/maple-stamp-domain-mariadb/application.yaml
