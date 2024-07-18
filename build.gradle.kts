@@ -38,7 +38,7 @@ subprojects {
 
     tasks.register<Copy>("copySecrets") {
         from("../secrets/")
-        into("src/main/resources/secrets")
+        into("src/main/resources/copied-secrets")
     }
 
     tasks.named<ProcessResources>("processResources") {
