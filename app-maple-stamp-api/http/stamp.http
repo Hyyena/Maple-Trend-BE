@@ -1,0 +1,14 @@
+###
+POST http://localhost:9000/api/v1/maple/stamp?inven_nickname=검보선장&maple_nickname=엄고별
+Content-Type: application/json
+
+{
+  "nexonApiKey": "test_494f0754dea01d6dc536f577c4c8991c29711c31f4aa2adb508464a548cb07b0b18bbbf575994ead577b7084eadfb84f"
+}
+
+###
+@invenNickname = 검보선장
+GET http://localhost:9000/api/v1/maple/stamp/{{invenNickname}}
+Content-Type: application/json
+
+###

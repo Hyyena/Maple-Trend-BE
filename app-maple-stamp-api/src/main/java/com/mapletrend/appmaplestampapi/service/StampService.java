@@ -109,13 +109,6 @@ public class StampService {
 
         graphics2D.dispose();
 
-//        try {
-//            File file = new File("stamp.jpg");
-//            ImageIO.write(bufferedImage, "jpg", file);
-//        } catch (IOException e) {
-//            log.error("이미지 파일 생성 중 오류가 발생했습니다.", e);
-//        }
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         try {
             ImageIO.write(bufferedImage, "jpg", baos);
